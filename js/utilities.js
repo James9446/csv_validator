@@ -4,7 +4,7 @@
 import * as fs from 'node:fs';
 
 
-export function listFolderFiles(type='select', path='./data/uploaded') {
+export function listFolderFiles(type='select', path='./data/raw') {
   try {
     return fs.readdirSync(path).map(file => {
       // console.log(file);

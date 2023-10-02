@@ -7,7 +7,7 @@ async function selectCSV() {
     message: '\n\nSelect a CSV',
     choices: listFolderFiles('select')
   });
-  const path = './data/uploaded/'
+  const path = './data/raw/'
   setConfig('fileName', csv);
   setConfig('path', path);
 }
@@ -77,6 +77,6 @@ if (action === 'process') {
   duplicateDataOption = await selectDuplicateDataOption();
 }
 
-console.log(action, missingDataOption, duplicateDataOption);
+// console.log(action, missingDataOption, duplicateDataOption);
 
 checkForNegatives(action)
