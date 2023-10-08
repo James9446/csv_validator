@@ -1,17 +1,12 @@
 import fs from "fs";
 import csv from "csv-parser";
 import createCsvWriter from "fast-csv";
-import { setConfig, fetchFile } from './utilities.js';
 
-
-export function checkForNegatives(action = "test", newFileName) {
-  // action types: list, test, process
-  const config = fetchFile();
-  let fileName = config.fileName;
-  let path = config.path;
+export async function handleNegatives(action = "test", folder, fileName) {
+  let path = `./data/${folder}/${fileName}`
   let data = [];
   let totalNegative = 0;
-  fs.createReadStream(`${path}${fileName}`)
+  fs.createReadStream(path)
     .pipe(csv())
     .on("data", (row) => {
       if (Number(row.points) < 0) {
@@ -20,13 +15,13 @@ export function checkForNegatives(action = "test", newFileName) {
           case "list":
             data.push(row);
             break;
-          case "process":
+          case "negatives":
             row.points = 0;
             data.push(row);
             break;
         }
       } else {
-        if (action === "process") data.push(row); // push unchanged row if action is process
+        if (action === "negatives") data.push(row); // push unchanged row if action is process
       }
     })
     .on("end", () => {
@@ -37,18 +32,15 @@ export function checkForNegatives(action = "test", newFileName) {
           case "list":
             console.log('\n\n', data);
             break;
-          case "process":
-            path = './data/modified/'
-            fileName = newFileName ? newFileName : `modified_${fileName}`;
-            const fullPath = `${path}${fileName}`;
+          case "negatives":
+            path = `./data/modified/${fileName}`
+            
+            // this creates a new csv file with modified data
             const csvWriter = createCsvWriter.writeToPath(
-              fullPath,
+              path,
               data,
               { headers: true }
-            ); // this creates a new csv file with modified data
-            console.log("New CSV file created with all negatives overwritten.");
-            setConfig('fileName', fileName);
-            setConfig('path', path);
+            ); 
             break;
           case "test":
             console.log("\nNegatives Test: Failed");
@@ -62,5 +54,5 @@ export function checkForNegatives(action = "test", newFileName) {
 }
 
 export default {
-  checkForNegatives,
+  handleNegatives,
 };

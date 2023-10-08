@@ -1,15 +1,23 @@
 import { select } from '@inquirer/prompts';
-import { listFolderFiles, setConfig } from './js/utilities.js';
-import { checkForNegatives } from './js/checkForNegatives.js';
+import { listFolderFiles, printFolderStructure } from './js/utilities.js';
+import { handleNegatives } from './js/handleNegatives.js';
+import { handleDuplicates } from './js/handleDuplicates.js';
 
-async function selectCSV() {
-  const csv = await select({
-    message: '\n\nSelect a CSV',
-    choices: listFolderFiles('select')
+async function selectFolder() {
+  printFolderStructure();
+  const folder = await select({
+    message: '\n\nSelect a Folder',
+    choices: listFolderFiles('select', './data/')
   });
-  const path = './data/raw/'
-  setConfig('fileName', csv);
-  setConfig('path', path);
+  return folder;
+}
+
+async function selectFile(folder) {
+  const fileName = await select({
+    message: '\n\nSelect a File',
+    choices: listFolderFiles('select', `./data/${folder}`)
+  });
+  return fileName;
 }
 
 async function selectAction() {
@@ -21,8 +29,12 @@ async function selectAction() {
         value: 'test'
       },
       {
-        name: 'Process a new CSV',
-        value: 'process'
+        name: 'Handle Negatives',
+        value: 'negatives'
+      },
+      {
+        name: 'Handle Duplicates',
+        value: 'duplicates'
       }
     ]
   });
@@ -67,16 +79,20 @@ async function selectDuplicateDataOption() {
   return option;
 }
 
-await selectCSV()
 const action = await selectAction();
-let missingDataOption;
-let duplicateDataOption;
+const folder = await selectFolder();
+const fileName = await selectFile(folder)
 
-if (action === 'process') {
-  missingDataOption = await selectMissingDataOption();
-  duplicateDataOption = await selectDuplicateDataOption();
+if (action === 'test') {
+  handleNegatives(action, folder, fileName);
+  handleDuplicates(action, folder, fileName);
 }
 
-// console.log(action, missingDataOption, duplicateDataOption);
+if (action === 'negatives') {
+  handleNegatives(action, folder, fileName);
+}
 
-checkForNegatives(action)
+if (action === 'duplicates') {
+  const duplicateDataOption = await selectDuplicateDataOption();
+  handleDuplicates(action, folder, fileName, duplicateDataOption);
+}

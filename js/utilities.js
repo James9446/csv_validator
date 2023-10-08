@@ -6,7 +6,7 @@ import * as fs from 'node:fs';
 
 export function listFolderFiles(type='select', path='./data/raw') {
   try {
-    return fs.readdirSync(path).map(file => {
+    return fs.readdirSync(path).filter(file => file != '.DS_Store').map(file => {
       // console.log(file);
       if (type === 'select') {
         let choice = {
@@ -23,6 +23,16 @@ export function listFolderFiles(type='select', path='./data/raw') {
     console.error('Error: ', err);
   }
 };
+
+export function printFolderStructure() {
+  const folders = listFolderFiles('list', './data');
+  console.log('Folder Structure:');
+  folders.forEach(folder => {
+    const files = listFolderFiles('list', `./data/${folder}`);
+    console.log(`    ${folder}`)
+    files.forEach(file => console.log(`      • ${file}`))
+  })
+}
 
 export function setConfig(key, value) {
   let config = fetchFile();
@@ -53,5 +63,6 @@ export function saveFile (data, path='./', fileName='config.json', type='json') 
 
 export default {
   listFolderFiles,
-  setConfig
+  setConfig,
+  printFolderStructure
 }
