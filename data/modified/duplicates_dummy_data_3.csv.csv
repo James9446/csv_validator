@@ -1,0 +1,10 @@
+email,points,customerId,data_issue
+roddy@example.com,200,167030,This record is duplicated. The customerId is associated with multiple email values.
+roddy222@example.com,-400,167030,This record is duplicated. The customerId is associated with multiple email values.
+roddy@example.com,200,167030,This record is duplicated. The customerId is associated with multiple email values.
+roddy@example.com,300,167031,This record is duplicated. The email is associated with multiple customerId values.
+roddy@example.com,-400,167030,This record is duplicated. The customerId is associated with multiple email values.
+lg2@example.org,-488,933818,This record is duplicated. The customerId is associated with multiple email values.
+lg@example.org,-488,933818,This record is duplicated. The customerId is associated with multiple email values.
+lguerrero@example.org,-488,933818,This record is duplicated. The customerId is associated with multiple email values.
+roddy@example.com,500,167031,This record is duplicated. The email is associated with multiple customerId values.

@@ -1,6 +1,4 @@
 'use strict'
-// const fs = require('fs');
-// import * as fs from 'node:fs/promises';
 import * as fs from 'node:fs';
 
 
