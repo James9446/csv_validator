@@ -2,6 +2,7 @@ import { select } from '@inquirer/prompts';
 import { listFolderFiles, printFolderStructure } from './js/utilities.js';
 import { handleNegatives } from './js/handleNegatives.js';
 import { handleDuplicates } from './js/handleDuplicates.js';
+import { handleMissingData } from './js/handleMissingData.js'
 
 async function selectFolder() {
   printFolderStructure();
@@ -29,12 +30,16 @@ async function selectAction() {
         value: 'test'
       },
       {
-        name: 'Handle Negatives',
-        value: 'negatives'
+        name: 'Handle Missing Data',
+        value: 'missing'
       },
       {
         name: 'Handle Duplicates',
         value: 'duplicates'
+      },
+      {
+        name: 'Handle Negatives',
+        value: 'negatives'
       }
     ]
   });
@@ -84,15 +89,21 @@ const folder = await selectFolder();
 const fileName = await selectFile(folder)
 
 if (action === 'test') {
-  handleNegatives(action, folder, fileName);
+  handleMissingData(action, folder, fileName);
   handleDuplicates(action, folder, fileName);
+  handleNegatives(action, folder, fileName);
 }
 
-if (action === 'negatives') {
-  handleNegatives(action, folder, fileName);
+if (action === 'missing') {
+  const missingDataOption = await selectMissingDataOption();
+  handleMissingData(action, folder, fileName, missingDataOption);
 }
 
 if (action === 'duplicates') {
   const duplicateDataOption = await selectDuplicateDataOption();
   handleDuplicates(action, folder, fileName, duplicateDataOption);
+}
+
+if (action === 'negatives') {
+  handleNegatives(action, folder, fileName);
 }
