@@ -8,16 +8,45 @@ export async function handleMissingData(action = "test", folder, fileName, optio
   let removed = [];
   let result = [];
 
+  const headersMap = {
+    email: "email",
+    customerId: "customerId",
+    points: "points",
+  };
   // parse the csv
   fs.createReadStream(path)
     .pipe(csv())
     .on("data", (row) => {
+      let requiredHeadersCount = 0;
+      for (let key in row) {
+        if (key === "email") {
+          requiredHeadersCount++;
+        }
+        if (key === "customerId") {
+          requiredHeadersCount++;
+        }
+        if (key === "points") {
+          requiredHeadersCount++;
+        }
+      };
+      if (requiredHeadersCount !== 3) {
+        throw new Error("Missing one or more of the follwoing required headers: 'email', 'customerId', 'points'. \n\n If you believe those headers do exist then there was likely in issue with how the CSV was compiled.\n\n");
+      }
       data.push(row);
     })
     .on("end", async () => {
       // Checking for duplicates and processing
       for (let i = 0; i < data.length; i++) {
-        
+        // console.log(data[i]);
+        // console.log('data[i].customerId', data[i]['customerId']);
+        // console.log('data[i].email', data[i].email);
+        // console.log('!data[i].customerId', !data[i]['customerId']);
+        // console.log('!data[i].email', !data[i]['email']);
+        // for (let key in data[i]) {
+        //   // console.log('key', key, typeof(key));
+        //   // console.log('row[key]', data[i][key]);
+        //   // console.log(data[i]);
+        // };
         if (!data[i].customerId && !data[i].email) {
           removed.push({...data[i], data_issue: "Missing the email and customerId"});
           continue;

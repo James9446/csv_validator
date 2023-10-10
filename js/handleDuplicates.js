@@ -19,6 +19,21 @@ export async function handleDuplicates(action = "test", folder, fileName, option
   fs.createReadStream(path)
     .pipe(csv())
     .on("data", (row) => {
+      let requiredHeadersCount = 0;
+      for (let key in row) {
+        if (key === "email") {
+          requiredHeadersCount++;
+        }
+        if (key === "customerId") {
+          requiredHeadersCount++;
+        }
+        if (key === "points") {
+          requiredHeadersCount++;
+        }
+      };
+      if (requiredHeadersCount !== 3) {
+        throw new Error("Missing one or more of the follwoing required headers: 'email', 'customerId', 'points'. \n\n If you believe those headers do exist then there was likely in issue with how the CSV was compiled.\n\n");
+      }
       data.push(row);
     })
     .on("end", async () => {
