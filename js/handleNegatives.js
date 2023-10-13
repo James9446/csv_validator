@@ -49,13 +49,14 @@ export async function handleNegatives(action = "test", folder, fileName) {
             break;
           case "negatives":
             path = `./data/modified/${fileName}`
-            
+            const createdOrModified = folder === "raw" ? "Created" : "Modified";
             // this creates a new csv file with modified data
             const csvWriter = createCsvWriter.writeToPath(
               path,
               data,
               { headers: true }
             ); 
+            console.log(`\n${createdOrModified} file ${fileName}. It can be found at ${path}\n`)
             break;
           case "test":
             console.log("\nNegatives Test: Failed");

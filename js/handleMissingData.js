@@ -78,16 +78,19 @@ export async function handleMissingData(action = "test", folder, fileName, optio
 
       // Based on 'action' parameter decide whether to write to a new csv or console log the status
       if (action === "missing") {
+        const createdOrModified = folder === "raw" ? "Created" : "Modified";
         createCsvWriter
           .write(result, { headers: true })
           .pipe(fs.createWriteStream(`./data/modified/${fileName}`));
         createCsvWriter
           .write(removed, { headers: true })
-          .pipe(fs.createWriteStream(`./data/modified/missing_data_${fileName}.csv`));
+          .pipe(fs.createWriteStream(`./data/modified/missing_data_${fileName}`));
+        console.log(`\n${createdOrModified} file: ${fileName}. It can be found at ./data/modified/${fileName}`)
+        console.log(`\nCreated file: missing_data_${fileName}. It can be found at ./data/modified/missing_data_${fileName}\n`)
       } else if (action === "test") {
         if (removed.length === 0) console.log("\nMissing Data Test: Passed\n");
         else {
-          console.log("\nMissing Test: Failed");
+          console.log("\nMissing Data Test: Failed");
           console.log(`Count of Missing: ${removed.length}\n`);
         }
       }

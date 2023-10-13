@@ -1,4 +1,0 @@
-email,points,customerId,data_issue
-luis40@example.org,100,250869,A points discrepancy was found. The points value was set to the higher amount
-sheila62@example.org,200,353016,This record is duplicated. The email is associated with multiple customerId values.
-sheila62@example.org,200,353015,This record is duplicated. The email is associated with multiple customerId values.
