@@ -151,12 +151,15 @@ export async function handleDuplicates(action = "test", folder, fileName, option
 
       // Based on 'action' parameter decide whether to write to a new csv or console log the status
       if (action === "duplicates") {
+        const createdOrModified = folder === "raw" ? "Created" : "Modified";
         createCsvWriter
           .write(result, { headers: true })
           .pipe(fs.createWriteStream(`./data/modified/${fileName}`));
         createCsvWriter
           .write(removed, { headers: true })
-          .pipe(fs.createWriteStream(`./data/modified/duplicates_${fileName}.csv`));
+          .pipe(fs.createWriteStream(`./data/modified/duplicates_${fileName}`));
+        console.log(`\n${createdOrModified} file ${fileName}. It can be found at ./data/modified/${fileName}`)
+        console.log(`\nCreated file duplicates_${fileName}. It can be found at ./data/modified/duplicates_${fileName}\n`)
       } else if (action === "test") {
         if (removed.length === 0) console.log("\nDuplicates Test: Passed\n");
         else {

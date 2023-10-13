@@ -1,0 +1,5 @@
+email,points,customerId,data_issue
+,101,937844,Missing the email
+,102,876130,Missing the email
+,103,,Missing the email and customerId
+pete91@example.com,104,,Missing the customerId
