@@ -13,6 +13,7 @@ export async function handleDuplicates(action = "test", folder, fileName, option
     customerIds: []
   }
   let removed = [];
+  let exactDuplicates = [];
   let result = [];
 
   // parse the csv
@@ -41,9 +42,16 @@ export async function handleDuplicates(action = "test", folder, fileName, option
       for (let i = 0; i < data.length; i++) {
         let key = data[i].customerId + data[i].email;
 
+        if (!data[i].customerId || !data[i].email) {
+          // rows with null values should not be counted as duplicates
+          // rows missing either customerId or email are handled by the missing data function
+          continue;
+        }
+
         if (stagedData[key] && stagedData[key].points === data[i].points) {
           // record is an exact match and doesn't need to be logged; it should just be skipped
           // *note this currently does not account for potential discrepancy for expirtationDate
+          exactDuplicates.push(data[i]);
           continue;
         }
 
@@ -158,13 +166,17 @@ export async function handleDuplicates(action = "test", folder, fileName, option
         createCsvWriter
           .write(removed, { headers: true })
           .pipe(fs.createWriteStream(`./data/modified/duplicates_${fileName}`));
-        console.log(`\n${createdOrModified} file ${fileName}. It can be found at ./data/modified/${fileName}`)
-        console.log(`\nCreated file duplicates_${fileName}. It can be found at ./data/modified/duplicates_${fileName}\n`)
+        console.log(`\n${createdOrModified} file ${fileName}. It can be found at ./data/modified/`)
+        console.log(`\nCreated file duplicates_${fileName}. It can be found at ./data/modified/\n`)
       } else if (action === "test") {
-        if (removed.length === 0) console.log("\nDuplicates Test: Passed\n");
-        else {
-          console.log("\nDuplicates Test: Failed");
-          console.log(`Count of Duplicates: ${removed.length}\n`);
+        if (removed.length === 0 && exactDuplicates.length === 0) {
+          console.log("\nDuplicates Test: PASSED\n");
+        } else {
+          console.log("\nDuplicates Test: FAILED");
+          console.log(` • Count of Duplicates: ${removed.length}`);
+          if (exactDuplicates.length) {
+            console.log(` • Count of Exact Duplicates: ${exactDuplicates.length} (Note: Exact Duplicates will not be added to duplicates_${fileName})\n`);
+          }
         }
       }
     });
