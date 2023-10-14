@@ -2,4 +2,7 @@ email,points,customerId,data_issue
 ,101,937844,Missing the email
 ,102,876130,Missing the email
 ,103,,Missing the email and customerId
+mark39@example.com,,382765,Missing the points
+jill56@example.com,,459204,Missing the points
 pete91@example.com,104,,Missing the customerId
+bill34@example.com,,398405,Missing the points

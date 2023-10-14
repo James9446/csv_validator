@@ -41,7 +41,7 @@ export async function handleNegatives(action = "test", folder, fileName) {
     })
     .on("end", () => {
       if (totalNegative === 0) {
-        console.log("\nNegatives Test: Passed\n");
+        console.log("\nNegatives Test: PASSED\n");
       } else {
         switch (action) {
           case "list":
@@ -56,12 +56,12 @@ export async function handleNegatives(action = "test", folder, fileName) {
               data,
               { headers: true }
             ); 
-            console.log(`\n${createdOrModified} file ${fileName}. It can be found at ${path}\n`)
+            console.log(`\n${createdOrModified} file ${fileName}. It can be found at ./data/modified/\n`)
             break;
           case "test":
-            console.log("\nNegatives Test: Failed");
+            console.log("\nNegatives Test: FAILED");
             console.log(
-              `Negatives total: ${totalNegative}\n`
+              ` • Negatives total: ${totalNegative}\n`
             );
             break;
         }
