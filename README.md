@@ -199,7 +199,6 @@ Created file: dummy_data_0.csv. It can be found at ./data/modified/
 
 Created file: missing_data_dummy_data_0.csv. It can be found at ./data/modified/
 ```
-Chosen action result: CSV file was successfully validated for missing values. Customer records with missing points value were skipped.
 
 ## Handle Duplicates:
 ```bash
