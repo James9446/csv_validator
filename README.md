@@ -64,12 +64,15 @@ When using the Handle Missing Data Action, you will select a configuration optio
 - `Skip the customer record and capture the details`
 - `Set the value to 0`
 
-|      Data Issue     |   Configuration Option   |                    Result                            |
-|:-------------------:|:------------------------:|:----------------------------------------------------:|
-| Missing customerId  |       Either  configuration option selected      | The customer record is not included in the new CSV and is added to the Missing Data CSV                    |
-| Missing email       |       Either configuration option selected      | The customer record is not included in the new CSV and is added to the Missing Data CSV                    |
-| Missing points      |   Skip the customer record and capture the details   | The customer record is not included in the new CSV and is added to the Missing Data CSV                   |
-| Missing points      |   Set the value to 0    | The customer record is included in the new CSV and the points value is set to 0. The customer record is NOT added to the Missing Data CSV  |
+#### Handling Missing Data Logic
+
+| Data Issue            | Configuration Option                                 | Record Included in New CSV | Record Included in Missing Data CSV |
+|----------------------|-------------------------------------------------------|-----------------------------|--------------------------------------|
+| Missing customerId   | Either configuration option selected                  | No                          | Yes                                  |
+| Missing email        | Either configuration option selected                  | No                          | Yes                                  |
+| Missing points       | Skip the customer record and capture the details      | No                          | Yes                                  |
+| Missing points       | Set the value to 0                                    | Yes                         | No                                   |
+
 
 ## Handle Duplicates 
 When using the Handle Duplicates Action, you will select a configuration option. This option only comes into play if the duplicate customer record has the exact same `email` and `customerId` values but does not have the same `points` value.
@@ -79,14 +82,17 @@ When using the Handle Duplicates Action, you will select a configuration option.
 - `Assign whichever point value is higher`
 - `Set the value to 0 and capture the details`
 
-| Data Issue            |       Configuration Option        |       Result        |
-|----------------------|--------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
-| Exact duplicate; the `email`, `customerId`, and `points` values are all the same          |       Any configuration option selected        |        The customer record is not included in the new CSV and is NOT added to the Duplicates CSV       |
-| Duplicate `customerId`; the `customerId` is associated with more than one `email` |       Any configuration option selected       |       The customer record is not included in the new CSV and is added to the Duplicates CSV       |
-| Duplicate `email`; the `email` is associated with more than one `customerId`      |       Any configuration option selected       |       The customer record is not included in the new CSV and is added to the Duplicates CSV       |
-| Duplicate `points`; `email` and `customerId` values match but the `points` value does not |      Assign whichever point value is lower     |     The customer record is included in the new CSV with the highest point value found. The customer record is NOT added to the Duplicates CSV     |
-| Duplicate `points`; `email` and `customerId` values match but the `points` value does not |      Assign whichever point value is higher      |     The customer record is included in the new CSV with the highest point value found. The customer record is NOT added to the Duplicates CSV     |
-| Duplicate `points`; `email` and `customerId` values match but the `points` value does not |      Set the value to 0 and capture the details      |     The customer record is included in the new CSV with the point value set to 0. The duplacate customer records are added to the Duplicates CSV     |
+# Handling Duplicates Logic
+
+| Data Issue            | Configuration Option                                | Record Included in New CSV | Record Included in Duplicates CSV |
+|----------------------|-----------------------------------------------------|---------------------------|------------------------------------|
+| Exact duplicate; the `email`, `customerId`, and `points` values are all the same | Any configuration option selected               | No                        | No                                 |
+| Duplicate `customerId`; the `customerId` is associated with more than one `email` | Any configuration option selected              | No                        | Yes                                |
+| Duplicate `email`; the `email` is associated with more than one `customerId` | Any configuration option selected              | No                        | Yes                                |
+| Duplicate `points`; `email` and `customerId` values match but the `points` value does not | Assign whichever point value is lower         | Yes                       | No                                 |
+| Duplicate `points`; `email` and `customerId` values match but the `points` value does not | Assign whichever point value is higher        | Yes                       | No                                 |
+| Duplicate `points`; `email` and `customerId` values match but the `points` value does not | Set the value to 0 and capture the details    | Yes                       | Yes                                |
+
 
 ## Handle Negative Numbers
 All customer records with negative `points` values are set to 0 and added to the new CSV. There is no additional CSV for capturing customer records that had a negative value.  
