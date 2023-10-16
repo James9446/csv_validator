@@ -51,7 +51,7 @@ async function selectMissingDataOption() {
     message: '\n\nWhat should be done if a customer record is missing the points value?',
     choices: [
       {
-        name: 'Skip the customer record',
+        name: 'Skip the customer record and capture the details',
         value: 'skipRecord'
       },
       {
@@ -76,7 +76,7 @@ async function selectDuplicateDataOption() {
         value: 'higher'
       },
       {
-        name: 'Set the value to 0 and log the details',
+        name: 'Set the value to 0 and capture the details',
         value: 'setToZero'
       }
     ]
