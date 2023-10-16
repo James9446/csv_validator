@@ -82,7 +82,7 @@ When using the Handle Duplicates Action, you will select a configuration option.
 - `Assign whichever point value is higher`
 - `Set the value to 0 and capture the details`
 
-# Handling Duplicates Logic
+#### Handling Duplicates Logic
 
 | Data Issue            | Configuration Option                                | Record Included in New CSV | Record Included in Duplicates CSV |
 |----------------------|-----------------------------------------------------|---------------------------|------------------------------------|
