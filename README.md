@@ -64,14 +64,14 @@ When using the Handle Missing Data Action, you will select a configuration optio
 - `Skip the customer record and capture the details`
 - `Set the value to 0`
 
-#### Handling Missing Data Logic
+#### Logic Table: Handling Missing Data Logic
 
-| Data Issue            | Configuration Option                                 | Record Included in New CSV | Record Included in Missing Data CSV |
-|----------------------|-------------------------------------------------------|-----------------------------|--------------------------------------|
-| Missing customerId   | Either configuration option selected                  | No                          | Yes                                  |
-| Missing email        | Either configuration option selected                  | No                          | Yes                                  |
-| Missing points       | Skip the customer record and capture the details      | No                          | Yes                                  |
-| Missing points       | Set the value to 0                                    | Yes                         | No                                   |
+| Data Issue             | Configuration Option                                  | Record Included in New CSV  | Record Included in Missing Data CSV |
+|------------------------|-------------------------------------------------------|-----------------------------|--------------------------------------|
+| Missing `customerId`   | Either configuration option selected                  | No                          | Yes                                  |
+| Missing `email`        | Either configuration option selected                  | No                          | Yes                                  |
+| Missing `points`       | Skip the customer record and capture the details      | No                          | Yes                                  |
+| Missing `points`       | Set the value to 0                                    | Yes                         | No                                   |
 
 
 ## Handle Duplicates 
@@ -82,7 +82,7 @@ When using the Handle Duplicates Action, you will select a configuration option.
 - `Assign whichever point value is higher`
 - `Set the value to 0 and capture the details`
 
-#### Handling Duplicates Logic
+#### Logic Table: Handling Duplicates
 
 | Data Issue            | Configuration Option                                | Record Included in New CSV | Record Included in Duplicates CSV |
 |----------------------|-----------------------------------------------------|---------------------------|------------------------------------|
