@@ -64,7 +64,7 @@ When using the Handle Missing Data Action, you will select a configuration optio
 - `Skip the customer record and capture the details`
 - `Set the value to 0`
 
-#### Logic Table: Handling Missing Data Logic
+#### Logic Table: Handling Missing Data
 
 | Data Issue             | Configuration Option                                  | Record Included in New CSV  | Record Included in Missing Data CSV |
 |------------------------|-------------------------------------------------------|-----------------------------|--------------------------------------|
